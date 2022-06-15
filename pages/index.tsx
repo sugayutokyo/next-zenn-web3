@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import { useState } from 'react';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
 import ZCContract from '../build/contracts/ZennCoin.json';
@@ -8,7 +9,7 @@ import { ZennCoin } from '../types/abi/ZennCoin';
 const web3 = new Web3(new Web3.providers.HttpProvider(`http://127.0.0.1:7545`));
 
 // コントラクトのアドレス
-const address = '0x7D4d7a0da0e8e1Dc90a86fDB82882a94190d89D6';
+const address = '0x8F4D574EFe77e00af32C54d2A0D07F7C53cb56bF';
 
 const ABI = ZCContract.abi as any as AbiItem;
 // コントラクトのインスタンス
