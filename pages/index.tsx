@@ -18,6 +18,8 @@ const contract = new web3.eth.Contract(ABI, address) as unknown as ZennCoin;
 const walletAddressUserA = '0x7D4d7a0da0e8e1Dc90a86fDB82882a94190d89D6';
 const walletAddressUserB = '0x95a1D1A9fA7280E8A98c288a7bFD69EFdEFcD390';
 
+const contractFromA = new web3.eth.Contract(ABI, address, { from: walletAddressUserA }) as unknown as ZennCoin;
+
 const Home: NextPage = () => {
   const [balanceZcUserA, setBalanceZcUserA] = useState(''); // ZennCoin残高 UserA
   const [balanceEthUserA, setBalanceEthUserA] = useState(''); // ETH残高 UserA
@@ -31,6 +33,10 @@ const Home: NextPage = () => {
       setBalanceZcUserB(await contract.methods.balanceOf(walletAddressUserB).call());
       setBalanceEthUserB(await web3.eth.getBalance(walletAddressUserB));
     }
+  };
+
+  const transferZennCoin = async () => {
+    await contractFromA.methods.transfer(walletAddressUserB, 1000).send();
   };
 
   return (
@@ -55,7 +61,7 @@ const Home: NextPage = () => {
         <div>「UserA 残高を取得」を押してください</div>
       )}
       <h2>UserB Info</h2>
-      {balanceZcUserA ? (
+      {balanceZcUserB ? (
         <table className="table-auto">
           <thead>
             <tr>
@@ -82,6 +88,11 @@ const Home: NextPage = () => {
         className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-5"
         onClick={() => getBalance('b')}>
         UserB 残高を取得
+      </button>
+      <button
+        className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded ml-5"
+        onClick={transferZennCoin}>
+        Transfer ZennCoin From A To B
       </button>
     </div>
   );
